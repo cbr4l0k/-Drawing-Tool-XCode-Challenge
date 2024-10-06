@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Completion Checklist
 
-## Getting Started
+## Setup and Basic Structure
+- [x] Set up Next.js project with TypeScript
+- [x] Create basic file structure (pages, components, utils)
+- [x] Set up Tailwind CSS
 
-First, run the development server:
+## Canvas Component
+- [x] Create Canvas component
+- [x] Implement basic drawing functionality
+- [x] Set up canvas size and initial styles
+- [x] Handle mouse events for drawing
+- [x] Canvas behavior documentation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Toolbar Component
+- [ ] Create basic Toolbar component structure
+- [ ] Implement tool selection functionality
+- [ ] Connect toolbar actions to Canvas component
+- [ ] Toolbar behavior documentation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Color Picker Component
+- [ ] Create basic ColorPicker component structure
+- [ ] Implement color selection logic
+- [ ] Connect color selection to Canvas component
+- [ ] Color picker behavior documentation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Drawing Utilities
+- [ ] Create drawingUtils.ts file
+- [ ] Implement basic utility functions (e.g., clearCanvas)
+- [ ] Implement blur algorithm
+- [ ] Implement more advanced utility functions as needed
+- [ ] Utility functions behavior documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## State Management
+- [ ] Implement global state management (e.g., React Context or Redux)
+- [ ] Share drawing settings across components
 
-## Learn More
+## Tool Functionality
+- [x] Implement brush tool
+- [ ] Implement blur tool
+- [ ] Create tool selection mechanism
 
-To learn more about Next.js, take a look at the following resources:
+## Additional Features
+- [ ] Implement brush size selection
+- [ ] Implement export functionality
+- [ ] Implement undo/redo functionality (bonus task)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Styling and Design
+- [ ] Ensure UI matches Figma design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Documentation
+- [ ] Create comprehensive README.md
+- [ ] Add inline code documentation
 
-## Deploy on Vercel
+## Deployment
+- [ ] Set up deployment pipeline
+- [ ] Deploy to hosting service
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Final Review
+- [ ] Refactor and optimize code
+- [ ] Perform final testing
+- [ ] Ensure all requirements are met
