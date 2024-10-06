@@ -4,15 +4,15 @@
 
 ### Setup and Basic Structure
 - [x] Set up Next.js project with TypeScript
-- [x] Create basic file structure (pages, components, utils)
+- [x] [Create basic file structure](./src/) (pages, components, utils)
 - [x] Set up Tailwind CSS
 
 ### Canvas Component
-- [x] Create Canvas component
+- [x] [Create Canvas component](./src/components/Canvas.tsx)
 - [x] Implement basic drawing functionality
 - [x] Set up canvas size and initial styles
 - [x] Handle mouse events for drawing
-- [x] Canvas behavior documentation
+- [x] [Canvas behavior documentation](./src/components/Canvas.md)
 
 ### Toolbar Component
 - [ ] Create basic Toolbar component structure
@@ -38,7 +38,7 @@
 - [ ] Share drawing settings across components
 
 ### Tool Functionality
-- [x] Implement brush tool
+- [x] [Implement brush tool](https://github.com/cbr4l0k/Drawing-Tool-XCode-Challenge/blob/12d1e27c8916d594b0f36e462f1506ab4a78fba2/src/components/Canvas.tsx#L44)
 - [ ] Implement blur tool
 - [ ] Create tool selection mechanism
 
