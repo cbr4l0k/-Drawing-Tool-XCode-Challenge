@@ -2,7 +2,17 @@
 
 import React, {useRef, useEffect, useState} from "react"
 
-const Canvas: React.FC = () => {
+interface CanvasProps {
+    selectedTool: 'brush' | 'blur';
+    selectedColor: string;
+    brushSize: number;
+}
+
+const Canvas: React.FC<CanvasProps> = ({
+    selectedTool,
+    selectedColor,
+    brushSize,
+}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [isDrawing, setIsDrawing] = useState(false)
 
@@ -13,20 +23,14 @@ const Canvas: React.FC = () => {
         const context = canvas.getContext('2d')
         if (!context) return;
         
-        canvas.width = window.innerWidth * 0.5
+        canvas.width = window.innerWidth
         canvas.height = window.innerHeight * 0.8
-
-        var bg = new Image();
-        bg.src = "https://github.com/cbr4l0k/cbr4l0k/blob/main/Extras/Images/banner.png?raw=true";
-            bg.onload = () => {
-            context.drawImage(bg,0,0)
-        }
 
         context.lineJoin = 'bevel'
         context.lineCap = 'round'
-        context.lineWidth = 7
-        context.strokeStyle = '#3bff2b'
-    }, [])
+        context.lineWidth = brushSize
+        context.strokeStyle = selectedColor
+    }, [selectedColor, brushSize])
 
     const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         setIsDrawing(true)
