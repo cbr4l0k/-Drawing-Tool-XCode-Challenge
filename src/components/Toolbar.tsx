@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ToolbarProps {
     selectedTool: 'brush' | 'blur';
@@ -11,6 +11,10 @@ interface ToolbarProps {
     onSave: () => void;
     onUndo: () => void;
     onRedo: () => void;
+    minSlider: string;
+    setMinSlider: (size: string) => void;
+    maxSlider: string;
+    setMaxSlider: (size: string) => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ 
@@ -24,8 +28,23 @@ const Toolbar: React.FC<ToolbarProps> = ({
     onSave,
     onUndo,
     onRedo,
+    minSlider,
+    setMinSlider,
+    maxSlider,
+    setMaxSlider,
 }) => {
     const colors = ['#FF4C4C', '#FFE629', '#10F549', '#35A4FF', '#A467FF', '#000000', '#FFFFFF'];
+
+    useEffect(() =>{
+        if (selectedTool === 'brush') {
+            setMinSlider("1")
+            setMaxSlider("100")
+        } else if (selectedTool === 'blur') {
+            setMinSlider("1")
+            setMaxSlider("20")
+            if (brushSize > 20) onBrushSizeChange(20)
+        }
+    }, [selectedTool, brushSize])
 
     return (
         <div 
@@ -56,21 +75,25 @@ const Toolbar: React.FC<ToolbarProps> = ({
         </div>
 
         {/* Color floor */}
-        <div>
-        <h3 className="text-md font-semibold mb-3 text-gray-300">Color</h3>
-        <div className="flex space-x-3">
-        {colors.map((color) => (
-            <button
-            key={color}
-            className={`w-8 h-8 rounded-xl border-2 ${
-                selectedColor === color ? (color === '#FFFFFF' ? 'border-black': 'border-white') : 'border-transparent'
-            }`}
-            style={{ backgroundColor: selectedTool === 'brush' ? color : 'gray' }}
-            onClick={() => onColorChange(color)}
-            />
-        ))}
-        </div> 
-        </div>
+        {
+            selectedTool === 'brush' ? (
+                <div>
+                <h3 className="text-md font-semibold mb-3 text-gray-300">Color</h3>
+                <div className="flex space-x-3">
+                {colors.map((color) => (
+                    <button
+                    key={color}
+                    className={`w-8 h-8 rounded-xl border-2 ${
+                        selectedColor === color ? (color === '#FFFFFF' ? 'border-black': 'border-white') : 'border-transparent'
+                    }`}
+                    style={{ backgroundColor: color }}
+                    onClick={() => onColorChange(color)}
+                    />
+                ))}
+                </div> 
+                </div>
+            ) : null
+        }
 
         {/* Size floor */}
         <div>
@@ -82,8 +105,8 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <div className="flex items-center space-x-3">
           <input
             type="range"
-            min="1"
-            max="50"
+            min={minSlider}
+            max={maxSlider}
             value={brushSize}
             onChange={(e) => onBrushSizeChange(Number(e.target.value))}
             className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
