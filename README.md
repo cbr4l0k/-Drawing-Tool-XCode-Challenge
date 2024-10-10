@@ -43,7 +43,7 @@
 ### Additional Features
 - [x] Implement brush size selection
 - [x] Implement image upload functionality
-- [ ] Implement export functionality
+- [x] Implement export functionality (save as PNG)
 - [ ] Implement undo/redo functionality
 
 ### Styling and Design
@@ -65,13 +65,13 @@
 
 ## Next Steps
 1. Implement undo/redo functionality
-2. Add export functionality
-3. Refine UI to match Figma design more closely
-4. Complete documentation for all components and features
-5. Set up deployment and publish the project
+2. Refine UI to match Figma design more closely
+3. Complete documentation for all components and features
+4. Set up deployment and publish the project
 
 ## Recent Updates
 - Added image upload functionality
 - Integrated image drawing on canvas
 - Updated Canvas component to use forwarded refs
 - Modified page component to handle image upload
+- Implemented save functionality (export as PNG)

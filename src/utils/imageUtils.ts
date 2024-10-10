@@ -53,3 +53,24 @@ export const uploadImage = (
   
   input.click();
 };
+
+export const saveCanvas = (
+  canvasRef: React.RefObject<HTMLCanvasElement>,
+  fileName: string = 'drawing'
+): void => {
+  const canvas = canvasRef.current;
+  if (canvas) {
+    // Convert the canvas to a data URL
+    const dataUrl = canvas.toDataURL('image/png');
+    
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    link.download = `${fileName}.png`;
+    link.href = dataUrl;
+    
+    // Programmatically click the link to trigger the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+};
