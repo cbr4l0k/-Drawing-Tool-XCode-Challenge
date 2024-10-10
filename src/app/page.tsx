@@ -1,15 +1,17 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Canvas from '../components/Canvas';
 import Toolbar from '../components/Toolbar';
+import { uploadImage } from '../utils/imageUtils';
 
 const DrawingApp: React.FC = () => {
   const [selectedTool, setSelectedTool] = useState<'brush' | 'blur'>('brush');
   const [selectedColor, setSelectedColor] = useState('#FF4C4C');
-  const [brushSize, setBrushSize] = useState(15)
-  const [minSlider, setMinSlider] = useState("1")
-  const [maxSlider, setMaxSlider] = useState("100")
+  const [brushSize, setBrushSize] = useState(15);
+  const [minSlider, setMinSlider] = useState("1");
+  const [maxSlider, setMaxSlider] = useState("100");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleToolChange = (tool: 'brush' | 'blur') => {
     setSelectedTool(tool);
@@ -20,22 +22,32 @@ const DrawingApp: React.FC = () => {
   };
 
   const handleBrushSizeChange = (size: number) => {
-      setBrushSize(size);
+    setBrushSize(size);
   };
 
   const handleMinSlider = (size: string) => {
-      setMinSlider(size)
-  }
+    setMinSlider(size);
+  };
+
   const handleMaxSlider = (size: string) => {
-      setMaxSlider(size)
-  }
+    setMaxSlider(size);
+  };
+
+  const handleUpload = () => {
+    if (canvasRef.current) {
+      uploadImage(canvasRef, () => {
+        console.log("Image uploaded successfully");
+      });
+    }
+  };
 
   return (
     <div className="">
       <Canvas 
-      selectedTool={selectedTool}
-      selectedColor={selectedColor}
-      brushSize={brushSize}
+        ref={canvasRef}
+        selectedTool={selectedTool}
+        selectedColor={selectedColor}
+        brushSize={brushSize}
       />
       <Toolbar
         selectedTool={selectedTool}
@@ -48,10 +60,10 @@ const DrawingApp: React.FC = () => {
         minSlider={minSlider}
         setMaxSlider={handleMaxSlider}
         maxSlider={maxSlider}
-        onUpload={()=>{console.log("onUpload")}}
-        onSave={()=>{console.log("onSave")}}
-        onUndo={()=>{console.log("onUndo")}}
-        onRedo={()=>{console.log("onRedo")}}
+        onUpload={handleUpload}
+        onSave={() => { console.log("onSave") }}
+        onUndo={() => { console.log("onUndo") }}
+        onRedo={() => { console.log("onRedo") }}
       />
     </div>
   );

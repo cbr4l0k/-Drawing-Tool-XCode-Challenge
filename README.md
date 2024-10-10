@@ -42,8 +42,9 @@
 
 ### Additional Features
 - [x] Implement brush size selection
+- [x] Implement image upload functionality
 - [ ] Implement export functionality
-- [x] Implement undo/redo functionality (buttons added, functionality to be implemented)
+- [ ] Implement undo/redo functionality
 
 ### Styling and Design
 - [x] Implement basic styling with Tailwind CSS
@@ -68,3 +69,9 @@
 3. Refine UI to match Figma design more closely
 4. Complete documentation for all components and features
 5. Set up deployment and publish the project
+
+## Recent Updates
+- Added image upload functionality
+- Integrated image drawing on canvas
+- Updated Canvas component to use forwarded refs
+- Modified page component to handle image upload

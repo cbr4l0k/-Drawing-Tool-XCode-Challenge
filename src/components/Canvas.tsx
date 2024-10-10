@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useRef, useEffect, useState, useMemo} from "react"
+import React, { useEffect, useState, useMemo, forwardRef, useImperativeHandle } from "react"
 import { startDrawing, stopDrawing, draw, applyCircularGaussianBlur } from '@/utils/drawingUtils';
 
 interface CanvasProps {
@@ -9,19 +9,21 @@ interface CanvasProps {
     brushSize: number;
 }
 
-const Canvas: React.FC<CanvasProps> = ({
+const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
     selectedTool,
     selectedColor,
     brushSize,
-}) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
+}, ref) => {
     const [isDrawing, setIsDrawing] = useState(false)
-    const contextRef = useRef<CanvasRenderingContext2D | null>(null)
+    const contextRef = React.useRef<CanvasRenderingContext2D | null>(null)
+    const canvasRef = React.useRef<HTMLCanvasElement>(null)
+
+    useImperativeHandle(ref, () => canvasRef.current as HTMLCanvasElement);
 
     const gaussianKernel = useMemo(() => {
         const kernelSize = 15; // This as a slider can be implemented as a future improvement
-            const sigma = 3; // This as a slider can be implemented as a future improvement
-                const kernel = new Float32Array(kernelSize * kernelSize);
+        const sigma = 3; // This as a slider can be implemented as a future improvement
+        const kernel = new Float32Array(kernelSize * kernelSize);
         const twoSigmaSquare = 2 * sigma * sigma;
         let sum = 0;
 
@@ -43,7 +45,6 @@ const Canvas: React.FC<CanvasProps> = ({
 
         return kernel;
     }, []);
-
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -69,7 +70,7 @@ const Canvas: React.FC<CanvasProps> = ({
         }
     }, [selectedColor, brushSize])
 
-        const handleStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const handleStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         startDrawing(e, setIsDrawing, handleDraw);
     }
 
@@ -83,8 +84,6 @@ const Canvas: React.FC<CanvasProps> = ({
         });
     }
 
-
-
     return (
         <canvas
         ref={canvasRef}
@@ -96,6 +95,8 @@ const Canvas: React.FC<CanvasProps> = ({
         style={{imageRendering: "pixelated"}}
         />
     )
-}
+})
+
+Canvas.displayName = 'Canvas';
 
 export default Canvas
