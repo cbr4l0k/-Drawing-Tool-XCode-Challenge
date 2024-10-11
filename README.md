@@ -1,4 +1,4 @@
-![logo](.http://url/to/img.png/assets/widget-logo.png)
+![logo](./assets/widget-logo.png)
 
 # Drawing Tool XCode Challenge
 
