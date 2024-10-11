@@ -83,7 +83,6 @@ const DrawingApp: React.FC = () => {
         onSave={handleSave}
         onUndo={handleUndo}
         onRedo={handleRedo}
-        canvasHistory={canvasHistory}
         />
         </div>
     );
