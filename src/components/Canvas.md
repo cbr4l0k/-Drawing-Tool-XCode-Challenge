@@ -1,60 +1,109 @@
-# Canvas
+# Canvas.tsx 
 
-The canvas is the heart of the codeX application, providing the main area where users can draw and create their artwork. This document explains the key concepts behind the canvas functionality in simple terms.
+The `Canvas` component is the heart of our drawing application. It provides the main area where users can draw and create their artwork. Let's break down the key aspects of this component.
 
-## Key Concepts
+## Component Structure
 
-### State Management
+The `Canvas` component is a functional component that uses React's `forwardRef` to allow parent components to access the canvas element directly.
 
-Think of state management as keeping track of everything that's happening on the canvas. It's like having a memory for the canvas that remembers:
+```typescript
+const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
+    selectedTool,
+    selectedColor,
+    brushSize,
+    canvasHistory,
+}, ref) => {
+    // Component logic here
+});
+```
 
-- What has been drawn so far
-- What tool is currently being used (like a pencil or eraser)
-- What color is selected
-- How thick the drawing line should be
+## State Management
 
-This "memory" allows the application to update the canvas correctly as the user interacts with it, ensuring that every drawing action is reflected accurately on the screen.
+The component uses several state variables to manage drawing:
 
-### Event Handling
+```typescript
+const [isDrawing, setIsDrawing] = useState(false);
+const contextRef = React.useRef<CanvasRenderingContext2D | null>(null);
+const canvasRef = React.useRef<HTMLCanvasElement>(null);
+```
 
-Event handling is how the canvas responds to user actions. It's like setting up sensors that detect when and how a user interacts with the canvas. These "sensors" pay attention to things like:
+- `isDrawing`: Tracks whether the user is currently drawing.
+- `contextRef`: Holds a reference to the canvas rendering context.
+- `canvasRef`: Holds a reference to the canvas element itself.
 
-- When the user presses the mouse button (to start drawing)
-- When the user moves the mouse (to continue drawing)
-- When the user releases the mouse button (to stop drawing)
+## Canvas Setup
 
-By detecting these actions, the canvas can translate them into actual drawing on the screen, making it feel responsive and natural to use.
+The canvas is set up when the component mounts:
 
-### Canvas Drawing
+```typescript
+useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-The actual drawing on the canvas involves using a set of built-in methods that allow for creating lines, shapes, and other visual elements. This process can be compared to using different art tools:
+    const context = canvas.getContext('2d');
+    if (!context) return;
 
-- Setting the brush color (like dipping a brush in paint)
-- Choosing the brush size (like selecting a thin or thick brush)
-- Drawing lines (like moving a pencil across paper)
-- Filling shapes with color (like using a paint bucket tool)
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.8;
 
-These methods work together to create the visual output that users see on the canvas.
+    context.lineJoin = 'bevel';
+    context.lineCap = 'round';
 
-## How It All Works Together
+    contextRef.current = context;
 
-1. **Setup**: When the canvas is first created, it's like setting up a blank art board. The application prepares the canvas, making sure it's ready to receive drawing commands.
+    canvasHistory.clearHistory(); // Initialize history with blank canvas
+}, [canvasHistory])
+```
 
-2. **Listening for Actions**: The canvas constantly listens for user actions, like mouse movements or clicks.
+This code sets the canvas size, configures the drawing context, and initializes the canvas history.
 
-3. **Responding to Actions**: When an action is detected (e.g., the user starts drawing), the canvas updates its state to remember what's happening.
+## Drawing Functionality
 
-4. **Drawing**: Based on the current state and the user's action, the canvas uses its drawing methods to create visual elements on the screen.
+The main drawing functionality is handled by three functions:
 
-5. **Updating**: The canvas continuously updates to reflect any changes, ensuring that what the user sees matches their actions in real-time.
+1. `handleStartDrawing`: Initiates drawing when the user presses the mouse button.
+2. `handleStopDrawing`: Stops drawing when the user releases the mouse button.
+3. `handleDraw`: Continues drawing as the user moves the mouse.
 
-## Next Steps
+These functions use utility functions from `drawingUtils.ts`:
 
-The canvas serves as the foundation for the codeX application. As the project progresses, more features are built on top of this basic canvas functionality, such as:
+```typescript
+const handleStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    startDrawing(e, setIsDrawing, handleDraw);
+}
 
-- A toolbar for selecting different drawing tools
-- Various painting capabilities (like different brush types)
-- Image manipulation tools (like filters or transformations)
-- Undo/redo functionality to manage drawing history
+const handleStopDrawing = () => {
+    stopDrawing(canvasRef, setIsDrawing);
+    canvasHistory.saveState(); 
+}
 
-Each of these additions builds upon the core concepts of state management, event handling, and drawing to create a more powerful and versatile digital art application.
+const handleDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    draw(e, isDrawing, canvasRef, contextRef, selectedTool, (x, y) => {
+        applyCircularGaussianBlur(x, y, contextRef, canvasRef, brushSize, gaussianKernel);
+    });
+}
+```
+
+## Rendering
+
+The component renders a canvas element with event listeners for mouse interactions:
+
+```typescript
+return (
+    <canvas
+    ref={canvasRef}
+    onMouseDown={handleStartDrawing}
+    onMouseUp={handleStopDrawing}
+    onMouseOut={handleStopDrawing}
+    onMouseMove={handleDraw}
+    className="border border-gray-300 rounded-lg shadow-lg"
+    style={{imageRendering: "pixelated"}}
+    />
+)
+```
+
+This setup allows the canvas to respond to user interactions and create drawings based on the selected tool and settings.
+
+## Conclusion
+
+The `Canvas` component manages the core drawing functionality of the application. It handles user interactions, manages the drawing state, and utilizes utility functions to implement different drawing tools. The use of React hooks and refs allows for efficient updates and direct manipulation of the canvas element.

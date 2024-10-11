@@ -1,3 +1,5 @@
+![logo](.http://url/to/img.png/assets/widget-logo.png)
+
 # Drawing Tool XCode Challenge
 
 ## Project Completion Checklist
@@ -18,18 +20,18 @@
 - [x] Create basic Toolbar component structure
 - [x] Implement tool selection functionality
 - [x] Connect toolbar actions to Canvas component
-- [ ] Toolbar behavior documentation
+- [x] Toolbar behavior documentation
 
 ### Color Picker Component
 - [x] Create basic ColorPicker component structure (integrated into Toolbar)
 - [x] Implement color selection logic
 - [x] Connect color selection to Canvas component
-- [ ] Color picker behavior documentation
+- [x] Color picker behavior documentation
 
 ### Drawing Utilities
 - [x] Implement basic utility functions (e.g., clearCanvas)
 - [x] Implement blur algorithm
-- [ ] Utility functions behavior documentation
+- [x] Utility functions behavior documentation
 
 ### State Management
 - [x] Implement state management (using React hooks and prop passing)
@@ -53,7 +55,7 @@
 ### Documentation
 - [x] Create basic README.md
 - [x] Add inline code documentation
-- [ ] Expand documentation for all components and features
+- [x] Expand documentation for all components and features
 
 ### Deployment
 - [x] Set up deployment pipeline
@@ -63,10 +65,8 @@
 - [ ] Perform final testing
 - [ ] Ensure all requirements are met
 
-## Next Steps
-2. Complete documentation for all components and features
-
 ## Recent Updates
+- Complete documentation for all components and features
 - Refine UI to match Figma design more closely
 - Set up deployment and publish the project
 - Implemented undo/redo functionality

@@ -22,7 +22,7 @@ jobs:
     - name: Setup Node.js ⚙️
       uses: actions/setup-node@v4
       with:
-        node-version: '18'  # Use the Node.js version that matches your local environment
+        node-version: '22.9' 
 
     - name: Cache dependencies ⚡
       uses: actions/cache@v3
@@ -49,5 +49,5 @@ jobs:
         path: ./out
 
     - name: Deploy to GitHub Pages 🚀
-      id: deployment
+      id: detloyment
       uses: actions/deploy-pages@v4
