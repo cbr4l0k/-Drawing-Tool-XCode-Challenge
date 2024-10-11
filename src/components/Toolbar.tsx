@@ -57,7 +57,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <div className="flex space-x-3">
         <button
         className={`p-2 rounded ${
-            selectedTool === 'brush' ? 'bg-gray-800 text-gray-200 font-bold' : 'bg-gray-700'
+            selectedTool === 'brush' ? 'bg-gray-700 text-gray-200 font-bold' : 'bg-gray-800'
         }`}
         onClick={() => onToolChange('brush')}
         >
@@ -65,7 +65,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         </button>
         <button
         className={`p-2 rounded ${
-            selectedTool === 'blur' ? 'bg-gray-800 text-gray-200 font-bold' : 'bg-gray-700'
+            selectedTool === 'blur' ? 'bg-gray-700 text-gray-200 font-bold' : 'bg-gray-800'
         }`}
         onClick={() => onToolChange('blur')}
         >

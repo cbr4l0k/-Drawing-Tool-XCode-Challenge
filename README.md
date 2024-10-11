@@ -48,7 +48,7 @@
 
 ### Styling and Design
 - [x] Implement basic styling with Tailwind CSS
-- [ ] Ensure UI matches Figma design (further refinement may be needed)
+- [x] Ensure UI matches Figma design (further refinement may be needed)
 
 ### Documentation
 - [x] Create basic README.md
@@ -56,19 +56,19 @@
 - [ ] Expand documentation for all components and features
 
 ### Deployment
-- [ ] Set up deployment pipeline
-- [ ] Deploy to hosting service
+- [x] Set up deployment pipeline
+- [x] Deploy to hosting service
 
 ### Final Review
 - [ ] Perform final testing
 - [ ] Ensure all requirements are met
 
 ## Next Steps
-1. Refine UI to match Figma design more closely
 2. Complete documentation for all components and features
-3. Set up deployment and publish the project
 
 ## Recent Updates
+- Refine UI to match Figma design more closely
+- Set up deployment and publish the project
 - Implemented undo/redo functionality
 - Added image upload functionality
 - Integrated image drawing on canvas
