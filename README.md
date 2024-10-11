@@ -44,7 +44,7 @@
 - [x] Implement brush size selection
 - [x] Implement image upload functionality
 - [x] Implement export functionality (save as PNG)
-- [ ] Implement undo/redo functionality
+- [x] Implement undo/redo functionality
 
 ### Styling and Design
 - [x] Implement basic styling with Tailwind CSS
@@ -64,14 +64,15 @@
 - [ ] Ensure all requirements are met
 
 ## Next Steps
-1. Implement undo/redo functionality
-2. Refine UI to match Figma design more closely
-3. Complete documentation for all components and features
-4. Set up deployment and publish the project
+1. Refine UI to match Figma design more closely
+2. Complete documentation for all components and features
+3. Set up deployment and publish the project
 
 ## Recent Updates
+- Implemented undo/redo functionality
 - Added image upload functionality
 - Integrated image drawing on canvas
 - Updated Canvas component to use forwarded refs
 - Modified page component to handle image upload
 - Implemented save functionality (export as PNG)
+- Integrated canvas history management for undo/redo operations

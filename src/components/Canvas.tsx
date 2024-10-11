@@ -2,27 +2,30 @@
 
 import React, { useEffect, useState, useMemo, forwardRef, useImperativeHandle } from "react"
 import { startDrawing, stopDrawing, draw, applyCircularGaussianBlur } from '@/utils/drawingUtils';
+import { CanvasHistory } from '@/utils/historicUtils';
 
 interface CanvasProps {
     selectedTool: 'brush' | 'blur';
     selectedColor: string;
     brushSize: number;
+    canvasHistory: CanvasHistory;
 }
 
 const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
     selectedTool,
     selectedColor,
     brushSize,
+    canvasHistory,
 }, ref) => {
-    const [isDrawing, setIsDrawing] = useState(false)
-    const contextRef = React.useRef<CanvasRenderingContext2D | null>(null)
-    const canvasRef = React.useRef<HTMLCanvasElement>(null)
+    const [isDrawing, setIsDrawing] = useState(false);
+    const contextRef = React.useRef<CanvasRenderingContext2D | null>(null);
+    const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
     useImperativeHandle(ref, () => canvasRef.current as HTMLCanvasElement);
 
     const gaussianKernel = useMemo(() => {
-        const kernelSize = 15; // This as a slider can be implemented as a future improvement
-        const sigma = 3; // This as a slider can be implemented as a future improvement
+        const kernelSize = 15;
+        const sigma = 3;
         const kernel = new Float32Array(kernelSize * kernelSize);
         const twoSigmaSquare = 2 * sigma * sigma;
         let sum = 0;
@@ -38,7 +41,6 @@ const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
             }
         }
 
-        // Normalize the kernel
         for (let i = 0; i < kernel.length; i++) {
             kernel[i] /= sum;
         }
@@ -47,28 +49,29 @@ const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
     }, []);
 
     useEffect(() => {
-        const canvas = canvasRef.current
+        const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const context = canvas.getContext('2d')
+        const context = canvas.getContext('2d');
         if (!context) return;
 
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight * 0.8
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight * 0.8;
 
-        context.lineJoin = 'bevel'
-        context.lineCap = 'round'
+        context.lineJoin = 'bevel';
+        context.lineCap = 'round';
 
-        contextRef.current = context
+        contextRef.current = context;
 
-    }, [])
+        canvasHistory.clearHistory(); // Initialize history with blank canvas
+    }, [canvasHistory])
 
     useEffect(() => {
         if (contextRef.current) {
-            contextRef.current.lineWidth = brushSize
-            contextRef.current.strokeStyle = selectedColor
+            contextRef.current.lineWidth = brushSize;
+            contextRef.current.strokeStyle = selectedColor;
         }
-    }, [selectedColor, brushSize])
+    }, [selectedColor, brushSize]);
 
     const handleStartDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         startDrawing(e, setIsDrawing, handleDraw);
@@ -76,6 +79,7 @@ const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(({
 
     const handleStopDrawing = () => {
         stopDrawing(canvasRef, setIsDrawing);
+        canvasHistory.saveState(); 
     }
 
     const handleDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {

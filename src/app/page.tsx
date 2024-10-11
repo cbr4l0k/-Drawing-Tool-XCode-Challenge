@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import Canvas from '@/components/Canvas';
 import Toolbar from '@/components/Toolbar';
 import { uploadImage, saveCanvas } from '@/utils/imageUtils';
+import { useCanvasHistory } from '@/utils/historicUtils';
 
 const DrawingApp: React.FC = () => {
     const [selectedTool, setSelectedTool] = useState<'brush' | 'blur'>('brush');
@@ -12,6 +13,7 @@ const DrawingApp: React.FC = () => {
     const [minSlider, setMinSlider] = useState("1");
     const [maxSlider, setMaxSlider] = useState("100");
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const canvasHistory = useCanvasHistory(canvasRef);
 
     const handleToolChange = (tool: 'brush' | 'blur') => {
         setSelectedTool(tool);
@@ -33,14 +35,6 @@ const DrawingApp: React.FC = () => {
         setMaxSlider(size);
     };
 
-    const handleUpload = () => {
-        if (canvasRef.current) {
-            uploadImage(canvasRef, () => {
-                console.log("Image uploaded successfully");
-            });
-        }
-    };
-
     const handleSave = () => {
         if (canvasRef.current) {
             saveCanvas(canvasRef, 'my-drawing');
@@ -48,6 +42,22 @@ const DrawingApp: React.FC = () => {
         }
     };
 
+    const handleUpload = () => {
+        if (canvasRef.current) {
+            uploadImage(canvasRef, () => {
+                console.log("Image uploaded successfully");
+                canvasHistory.saveState();
+            });
+        }
+    };
+
+    const handleUndo = () => {
+        canvasHistory.undo();
+    };
+
+    const handleRedo = () => {
+        canvasHistory.redo();
+    };
 
     return (
         <div className="">
@@ -56,6 +66,7 @@ const DrawingApp: React.FC = () => {
         selectedTool={selectedTool}
         selectedColor={selectedColor}
         brushSize={brushSize}
+        canvasHistory={canvasHistory}
         />
         <Toolbar
         selectedTool={selectedTool}
@@ -70,8 +81,9 @@ const DrawingApp: React.FC = () => {
         maxSlider={maxSlider}
         onUpload={handleUpload}
         onSave={handleSave}
-        onUndo={() => { console.log("onUndo") }}
-        onRedo={() => { console.log("onRedo") }}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
+        canvasHistory={canvasHistory}
         />
         </div>
     );

@@ -1,3 +1,4 @@
+import { CanvasHistory } from '@/utils/historicUtil';
 import React, { useEffect } from 'react';
 
 interface ToolbarProps {
@@ -15,6 +16,7 @@ interface ToolbarProps {
     setMinSlider: (size: string) => void;
     maxSlider: string;
     setMaxSlider: (size: string) => void;
+    canvasHistory: CanvasHistory,
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ 
@@ -32,16 +34,17 @@ const Toolbar: React.FC<ToolbarProps> = ({
     setMinSlider,
     maxSlider,
     setMaxSlider,
+    canvasHistory,
 }) => {
     const colors = ['#FF4C4C', '#FFE629', '#10F549', '#35A4FF', '#A467FF', '#000000', '#FFFFFF'];
 
     useEffect(() =>{
         if (selectedTool === 'brush') {
-            setMinSlider("1")
-            setMaxSlider("100")
+            setMinSlider("1");
+            setMaxSlider("100");
         } else if (selectedTool === 'blur') {
-            setMinSlider("1")
-            setMaxSlider("20")
+            setMinSlider("1");
+            setMaxSlider("20");
             if (brushSize > 20) onBrushSizeChange(20)
         }
     }, [selectedTool, brushSize])
