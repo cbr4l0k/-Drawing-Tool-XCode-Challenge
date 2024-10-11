@@ -2,31 +2,52 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" ]  # Set this to your default branch name
   pull_request:
     branches: [ "main" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+    - name: Checkout 🛎️
+      uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
+    - name: Setup Node.js ⚙️
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '18'  # Use the Node.js version that matches your local environment
 
-    - name: Install Dependencies
+    - name: Cache dependencies ⚡
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+
+    - name: Install Dependencies 🔧
       run: npm ci
 
-    - name: Build
-      run: npm run build  && touch out/.nojekyll
+    - name: Build 🏗️
+      run: npm run build
+      env:
+        NEXT_PUBLIC_BASE_PATH: /Drawing-Tool-XCode-Challenge
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.1.5
+    - name: Setup Pages ⚙️
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact 📡
+      uses: actions/upload-pages-artifact@v3
       with:
-        branch: gh-pages
-        folder: out
+        path: ./out
+
+    - name: Deploy to GitHub Pages 🚀
+      id: deployment
+      uses: actions/deploy-pages@v4
