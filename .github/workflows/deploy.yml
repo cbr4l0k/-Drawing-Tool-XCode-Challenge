@@ -34,6 +34,8 @@ jobs:
         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-node-
+      env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
     - name: Install Dependencies 🔧
       run: npm ci
