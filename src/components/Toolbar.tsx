@@ -40,7 +40,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             setMinSlider("1");
             setMaxSlider("100");
         } else if (selectedTool === 'blur') {
-            setMinSlider("1");
+            setMinSlider("5");
             setMaxSlider("20");
             if (brushSize > 20) onBrushSizeChange(20)
         }
@@ -100,7 +100,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         <div className='mb-3'>
         <h3 className='text-md font-semibold text-gray-300'>Size
         </h3>
-        <span className="text-gray-300 w-8 text-center text-xs"> {brushSize} px</span>
         </div>
         <div className="flex items-center space-x-3">
         <input
@@ -111,7 +110,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         onChange={(e) => onBrushSizeChange(Number(e.target.value))}
         className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
         />
-        <span className="text-gray-300 w-8 text-center">{brushSize}</span>
         </div>
         </div>
 
